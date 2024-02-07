@@ -38,7 +38,7 @@ const App = () => {
     try {
     
       const totalPrice = calculateTotalPrice(cartItems);
-      
+
       const commandResponse = await fetch('http://localhost:3000/api/commande/addCommande', {
         method: 'POST',
         headers: {
@@ -74,7 +74,8 @@ const App = () => {
           throw new Error('Failed to add detail to command');
         }
       }
-
+    // Vider le cartItems après avoir passé la commande
+    setCartItems([]);
       console.log('Order placed successfully');
     } catch (error) {
       console.error(error);

@@ -9,12 +9,17 @@ categoriesRouter = require('./routes/categoriesRouter.js')
 produitRouter = require('./routes/produitRouter.js');
 commandeRouter = require('./routes/commandeRouter.js');
 detailCommandeRouter = require('./routes/detailCommandeRouter.js');
+const {CheckUser,requireAuth} = require('./middleware/auth.middleware');
+const authRouter = require("./routes/authRouter.js");
 
 const app = express();
 dotenv.config();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+  }));
 
 
 app.use('/api/users', userRoute)
@@ -22,6 +27,7 @@ app.use('/api/categories', categoriesRouter)
 app.use('/api/produits', produitRouter)
 app.use('/api/commande', commandeRouter)
 app.use('/api/detailCommande', detailCommandeRouter)
+app.use("/api/auth", authRouter);
 
 app.use((err, req, res, next) => {
     console.log(err)

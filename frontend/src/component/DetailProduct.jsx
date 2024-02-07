@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { Link } from 'react-router-dom'
 
 const DetailProduct = ({ productId, addToCart }) => {
 
@@ -61,10 +61,10 @@ const DetailProduct = ({ productId, addToCart }) => {
         <p className="card-text">{category}</p>
         <p className="card-text">{product.description}</p>
 
-        <button className="btn btn-primary mx-3">{product.price} ₹</button>
-        <button onClick={handleAddToCart}>
+        <button className="btn btn-primary mx-3">{product.price} DT</button>
+        <Link to={`/cart`} class="btn btn-outline-success mx-3" onClick={handleAddToCart}>
           Add To Cart
-        </button>
+        </Link>
       </div>
     </div>
   );
