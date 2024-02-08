@@ -62,7 +62,7 @@ const DetailProduct = ({ productId, addToCart }) => {
         <p className="card-text">{product.description}</p>
 
         <button className="btn btn-primary mx-3">{product.price} DT</button>
-        <Link to={`/cart`} class="btn btn-outline-success mx-3" onClick={handleAddToCart}>
+        <Link to={`/cart`} className="btn btn-outline-success mx-3" onClick={handleAddToCart}>
           Add To Cart
         </Link>
       </div>

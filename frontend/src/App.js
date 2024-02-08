@@ -1,14 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Navbar from './component/Navbar'
 import Product from './component/Product'
 import {BrowserRouter as Router, Routes,Route} from 'react-router-dom'
+import { UidContext } from "./component/AppContext";
+import axios from "axios";
 import DetailProduct from './component/DetailProduct'
 import Cart from './component/Cart'
+import Login from './component/Login';
+import Register from './component/Register';
+
 const App = () => {
 
 
   const [cartItems, setCartItems] = useState([]);
+  const [uid, setUid] = useState(null);
+  const [tokenRequested, setTokenRequested] = useState(false);
 
+  useEffect(() => {
+    if (!tokenRequested) { // Vérifie si la requête a déjà été envoyée
+      const fetchToken = async () => {
+        try {
+          const response = await axios.get('http://localhost:3000/jwtid', { withCredentials: true });
+          console.log(response.data)
+          setUid(response.data);
+          setTokenRequested(true); // Met à jour la variable d'état pour indiquer que la requête a été envoyée
+        } catch (error) {
+          console.log('Error fetching token:', error);
+        }
+      };
+      fetchToken();
+    }
+  }, [uid, tokenRequested]);
 
   const addToCart = (product) => {
     const existingItemIndex = cartItems.findIndex((item) => item.product_id === product.product_id);
@@ -83,14 +105,18 @@ const App = () => {
   };
   return (
     <>
+    <UidContext.Provider value={uid}>
     <Router>
       <Navbar/>
       <Routes>
+      <Route path="/register" element={<Register />} /> 
+      <Route path="/login" element={<Login />} />
       <Route path="/" element={<Product />} />
       <Route path="/product/:id" element={<DetailProduct productId={1} addToCart={addToCart}/>} />
       <Route path="/cart" element={<Cart  cartItems={cartItems} updateQuantity={updateQuantity} placeOrder={placeOrder}/>} />
     </Routes>
     </Router>      
+    </UidContext.Provider>
     </>
   )
 }

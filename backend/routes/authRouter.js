@@ -2,6 +2,7 @@
 const authService = require('../services/authService.js')
 //const reviewController = require('../controllers/reviewController')
 
+const middleware = require('../middleware/auth.middleware.js')
 
 // router
 const router = require('express').Router()
@@ -10,7 +11,9 @@ const router = require('express').Router()
 // use routers
 router.post('/login', authService.login)
 router.post('/register', authService.register)
-router.post('/logout', authService.logout)
+router.get('/logout', authService.logout)
+router.get('*', middleware.CheckUser)
+
 
 
 

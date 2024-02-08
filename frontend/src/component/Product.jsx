@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Product = () => {
 
-    const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -22,17 +22,17 @@ const Product = () => {
 
   return (
     <div>
-      
+
       <div className="container my-5">
         <div className="row">
           {products.map((product) => {
             return (
-              <>
-                <div key={product.id} className="col-lg-4 col-md-6 my-3 text-center">
-                  <div className="card" style={{ width: "18rem" }}>
-                  
 
-                    <div className="card-body">
+              <div key={product.id} className="col-lg-4 col-md-6 my-3 text-center">
+                <div className="card" style={{ width: "18rem" }}>
+
+
+                  <div className="card-body">
                     <Link to={`/product/${product.id}`}>
                       <h5 className="card-title">{product.title}</h5>
                       <p className="card-text">{product.description}</p>
@@ -40,13 +40,13 @@ const Product = () => {
                         {product.price} DT
                       </button>
                       <button>Add To Cart</button>
-                      </Link>
-                    </div>
-                  
+                    </Link>
                   </div>
+
                 </div>
-                
-              </>
+              </div>
+
+
             );
           })}
         </div>

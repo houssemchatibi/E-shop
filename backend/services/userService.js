@@ -37,7 +37,7 @@ const addUser = async (req, res) => {
 
 
 
-// 2. get all products
+
 
 const getAllUser = async (req, res) => {
     try {
