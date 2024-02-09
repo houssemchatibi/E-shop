@@ -8,6 +8,13 @@ import DetailProduct from './component/DetailProduct'
 import Cart from './component/Cart'
 import Login from './component/Login';
 import Register from './component/Register';
+import Sidebar from './component/Sidebar';
+import Cartmanag from './component/Cartmanag';
+import DetailCart from './component/DetailCart';
+
+import { getUser } from "./actions/user.actions";
+import { useDispatch } from "react-redux";
+
 
 const App = () => {
 
@@ -15,6 +22,7 @@ const App = () => {
   const [cartItems, setCartItems] = useState([]);
   const [uid, setUid] = useState(null);
   const [tokenRequested, setTokenRequested] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!tokenRequested) { // Vérifie si la requête a déjà été envoyée
@@ -29,8 +37,9 @@ const App = () => {
         }
       };
       fetchToken();
+      if (uid) dispatch(getUser(uid))
     }
-  }, [uid, tokenRequested]);
+  }, [uid, tokenRequested, dispatch]);
 
   const addToCart = (product) => {
     const existingItemIndex = cartItems.findIndex((item) => item.product_id === product.product_id);
@@ -54,7 +63,12 @@ const App = () => {
   const calculateTotalPrice = () => {
     return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   };
-
+  
+  const handleDeleteItem = (productId) => {
+    // Supprimer l'élément du panier
+    const updatedCart = cartItems.filter((item) => item.product_id !== productId);
+    setCartItems(updatedCart);
+  };
 
   const placeOrder = async () => {
     try {
@@ -108,12 +122,16 @@ const App = () => {
     <UidContext.Provider value={uid}>
     <Router>
       <Navbar/>
+      <Sidebar/>
       <Routes>
       <Route path="/register" element={<Register />} /> 
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Product />} />
+      <Route path="/detailCart/:id" element={<DetailCart />} />
       <Route path="/product/:id" element={<DetailProduct productId={1} addToCart={addToCart}/>} />
-      <Route path="/cart" element={<Cart  cartItems={cartItems} updateQuantity={updateQuantity} placeOrder={placeOrder}/>} />
+      <Route path="/cart" element={<Cart  cartItems={cartItems} updateQuantity={updateQuantity} placeOrder={placeOrder} calculateTotalPrice={calculateTotalPrice } handleDeleteItem={handleDeleteItem}  />} />
+      <Route path="/cartmanag" element={<Cartmanag/>} /> 
+          
     </Routes>
     </Router>      
     </UidContext.Provider>

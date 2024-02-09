@@ -8,9 +8,12 @@ const router = require('express').Router()
 
 
 // use routers
-router.post('/addDetailCommande', detailCommandeService.addDetailCommande)
+router.post('/addDetailCommande', detailCommandeService.addDetailCommande);
+router.delete('/:id', detailCommandeService.deleteDetailCommande);
+router.get('/getAllDetailCommandes', detailCommandeService.getAllDetailCommandes);
+router.get('/:id', detailCommandeService.getDetailCommandeById);
 
-router.get('/AllDetailCommande', detailCommandeService.getAllDetailCommande)
+
 
 
 

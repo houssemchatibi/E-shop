@@ -99,6 +99,7 @@ const Register = () => {
           <div className="d-flex justify-content-center">
           <input type="submit" className="btn btn-lg btn-primary btn-block justify-content-center" value="Valider inscription" />
           </div>
+          
         </form>
         </div>
       )}

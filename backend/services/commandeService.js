@@ -4,7 +4,7 @@ const db = require('../models/indexdb')
 
 // create main Model
 const commande = db.commande
-
+const detailCommande = db.detailCommande
 
 // main work
 
@@ -32,21 +32,76 @@ const addCommande= async (req, res) => {
 
 
 
-// 2. get all products
+const deleteCommande = async (req, res) => {
+    try {
+        const commandeId = req.params.id;
 
-const getAllCommande = async (req, res) => {
+        // Supprimer la commande de la base de données
+        const deletedCommande = await commande.destroy({
+            where: {
+                id: commandeId
+            }
+        });
 
-    let commande = await commande.findAll({})
-    res.status(200).send(commande)
+        if (deletedCommande === 0) {
+            return res.status(404).json({ message: "Commande non trouvée" });
+        }
+
+        res.status(200).json({ message: "Commande supprimée avec succès" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+const getCommandeById = async (req, res) => {
+    try {
+        const commandeId = req.params.id;
+
+        // Rechercher la commande par son identifiant
+        const foundCommande = await commande.findByPk(commandeId);
+
+        if (!foundCommande) {
+            return res.status(404).json({ message: "Commande non trouvée" });
+        }
+
+        res.status(200).json(foundCommande);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+const getAllCommandes = async (req, res) => {
+    try {
+        
+        const commands = await commande.findAll({}); 
+        res.status(200).send(commands);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 
 }
 
-
-
+const getdetailcommandes = async (req, res) => {
+    try {
+      const { commandeId } = req.params;
+      // Requête pour récupérer tous les détails des commandes où order_id correspond à commandeId
+      const detailCommandes = await detailCommande.findAll({ where: { order_id: commandeId } });
+      res.status(200).json(detailCommandes);
+    } catch (error) {
+      console.error('Error fetching detail commandes:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  };
 
 module.exports = {
 
-    getAllCommande,
-    addCommande
+    addCommande,
+    deleteCommande,
+    getCommandeById,
+    getAllCommandes,
+    getdetailcommandes
     
 }

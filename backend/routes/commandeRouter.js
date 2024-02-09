@@ -8,10 +8,10 @@ const router = require('express').Router()
 
 
 // use routers
-router.post('/addCommande', commandeService.addCommande)
-
-router.get('/AllCommande', commandeService.getAllCommande)
-
+router.post('/addCommande', commandeService.addCommande);
+router.get('/getAllCommandes', commandeService.getAllCommandes); 
+router.delete('/:id', commandeService.deleteCommande);
+router.get('/:commandeId/detailcommandes', commandeService.getdetailcommandes);
 
 
 

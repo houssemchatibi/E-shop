@@ -6,9 +6,7 @@ const db = require('../models/indexdb')
 const detailCommande = db.detailCommande
 
 
-// main work
 
-// 1. create product
 
 const addDetailCommande = async (req, res) => {
     try {
@@ -31,23 +29,53 @@ const addDetailCommande = async (req, res) => {
   };
 
 
+  const getDetailCommandeById = async (req, res) => {
+    try {
+        const detailId = req.params.id;
+        const detail = await detailCommande.findByPk(detailId);
 
-// 2. get all products
+        if (!detail) {
+            return res.status(404).json({ message: "Detail not found" });
+        }
 
-const getAllDetailCommande = async (req, res) => {
+        res.status(200).json(detail);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
 
-    let detailCommande = await detailCommande.findAll({})
-    res.status(200).send(detailCommande)
+const getAllDetailCommandes = async (req, res) => {
+    try {
+        const details = await detailCommande.findAll({});
+        res.status(200).json(details);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
 
-}
+const deleteDetailCommande = async (req, res) => {
+    try {
+        const detailId = req.params.id;
+        const detail = await detailCommande.findByPk(detailId);
 
+        if (!detail) {
+            return res.status(404).json({ message: "Detail not found" });
+        }
 
+        await detail.destroy();
 
+        res.status(200).json({ message: "Detail deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
 
 module.exports = {
-
-    getAllDetailCommande,
-    addDetailCommande
-
-    
-}
+    addDetailCommande,
+    getDetailCommandeById,
+    getAllDetailCommandes,
+    deleteDetailCommande
+};

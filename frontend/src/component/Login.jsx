@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -63,8 +64,14 @@ const Login = () => {
         <div className="password error">{passwordError}</div>
         <br />
         <div className="d-flex justify-content-center">
-        <input type="submit" className="btn btn-lg btn-primary btn-block" value="Se connecter" />
+          <input type="submit" className="btn btn-lg btn-primary btn-block" value="Se connecter" />
         </div>
+        
+        <div className="register-wrapper">
+  
+        <Link to={'/register'} className="register">Register</Link>
+</div>
+        
       </form>
     </div>
   );

@@ -1,25 +1,29 @@
-.nav-bar{
+.nav-bar {
   display: flex;
   justify-content: space-between;
+  align-items: center; /* Centrer verticalement les éléments */
   background-color: #270858;
   padding: 10px;
+  padding-right: 5%;
   color: white;
 }
-.brand{
+
+.brand {
   font-weight: bolder;
-  width: 20%;
   text-align: center;
   font-size: 1.5rem;
   text-decoration: none;
   color: white;
 }
-.cart{
-  width: 20%;
+
+.cart,
+.login {
   text-align: center;
   font-weight: bolder;
   font-size: 1.5rem;
   text-decoration: none;
   color: white;
+  margin: 15%;
 }
 
 .nav-bar-wrapper{
@@ -135,6 +139,54 @@
     color: red; 
     font-size: 14px; 
     margin-top: 5px; 
+  }
+
+  .register-wrapper {
+    text-align: center; /* Centrer le contenu horizontalement */
+    margin-top: 20px;
+  }
+  
+  .register {
+    color: blue; /* Couleur bleue */
+    opacity: 0.7; /* Opacité */
+    font-weight: bolder;
+  width: 20%;
+  text-align: center;
+  font-size: 1.5rem;
+  text-decoration: none;
+  
+  }   
+  .nounou {
+    padding: 20px; /* Espacement intérieur */
+    text-align: center; /* Alignement du texte */
+    color: blue; /* Couleur bleue */
+    font-weight: bold; /* Police en gras */
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Arrière-plan semi-transparent */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
   }
   
 }

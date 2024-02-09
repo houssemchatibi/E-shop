@@ -16,6 +16,7 @@ router.get('/allUser', (req, res) => {
     userService.getAllUser(req, res);
 });
 
+router.get('/:id', userService.getUserById);
 
 
 

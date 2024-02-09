@@ -33,7 +33,21 @@ const addUser = async (req, res) => {
     }
 }
 
+const getUserById = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const foundUser = await user.findByPk(userId);
 
+        if (!foundUser) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+
+        res.status(200).json(foundUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Erreur interne du serveur');
+    }
+};
 
 
 
@@ -55,6 +69,7 @@ const getAllUser = async (req, res) => {
 module.exports = {
 
     getAllUser,
-    addUser
+    addUser,
+    getUserById
     
 }
